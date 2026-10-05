@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FULL PROGRAM İNDİR - Full Oyun, Program ve Uygulama Arşivi</title>
+    <style>
+        :root {
+            --bg-body: #1c1c1c;
+            --bg-header: #242424;
+            --accent-red: #d9534f;
+            --accent-hover: #c9302c;
+            --text-main: #b0b0b0;
+            --text-bright: #ffffff;
+            --card-bg: #242424;
+            --border-color: #383838;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; padding: 20px; }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        header {
+            background: var(--bg-header);
+            border-bottom: 4px solid var(--accent-red);
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+        header h1 { color: var(--text-bright); font-size: 2.4rem; font-weight: 700; letter-spacing: 1px; }
+        header h1 span { color: var(--accent-red); }
+        header p { color: #888; font-size: 0.95rem; margin-top: 5px; }
+
+        .search-bar-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #181818;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            color: var(--text-bright);
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-input:focus { border-color: var(--accent-red); }
+        .search-btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 3px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-btn:hover { background: var(--accent-hover); }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 25px;
+        }
+        @media (max-width: 850px) { .main-layout { grid-template-columns: 1fr; } }
+
+        .game-list { display: flex; flex-direction: column; gap: 20px; }
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .game-card:hover { border-color: var(--accent-red); }
+        @media (max-width: 500px) { .game-card { flex-direction: column; } }
+        
+        .game-thumb {
+            width: 140px;
+            height: 140px;
+            background: #1a1a1a;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+        
+        .game-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .game-title { color: var(--text-bright); font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+        .game-desc { font-size: 0.9rem; color: #999; line-height: 1.5; margin-bottom: 12px; }
+        .game-meta { font-size: 0.82rem; color: #777; }
+        .game-meta span { color: var(--text-main); }
+        .game-meta span.red-accent { color: var(--accent-red); }
+
+        .detail-view {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 25px;
+        }
+        .back-btn {
+            background: #1c1c1c;
+            color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .back-btn:hover { background: #333; }
+        .detail-title { font-size: 1.6rem; color: var(--text-bright); margin-bottom: 12px; border-bottom: 2px solid var(--accent-red); padding-bottom: 10px; }
+        .detail-section { margin-top: 20px; }
+        .detail-section h3 { color: var(--accent-red); font-size: 1.1rem; margin-bottom: 8px; }
+        .detail-desc { font-size: 0.95rem; color: #ccc; line-height: 1.6; }
+
+        .download-links-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+        .btn-download {
+            background: #1c1c1c;
+            color: #5cb85c;
+            border: 1px solid #5cb85c;
+            padding: 8px 16px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .btn-download:hover { background: #5cb85c; color: white; }
+
+        .sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            height: fit-content;
+        }
+        .sidebar h3 { color: var(--text-bright); font-size: 1.1rem; border-bottom: 2px solid var(--accent-red); padding-bottom: 8px; margin-bottom: 15px; }
+        .cat-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .cat-item {
+            padding: 8px 12px;
+            background: #1c1c1c;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+        .cat-item:hover, .cat-item.active { background: var(--accent-red); color: white; border-color: var(--accent-red); }
+
+        .warning-notice {
+            margin-top: 25px;
+            padding: 10px 12px;
+            background: rgba(217, 83, 79, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 3px;
+            color: #e67e22;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header onclick="goHome()">
+            <h1>FULL <span>PROGRAM</span> İNDİR</h1>
+            <p>Full Oyun, Program ve Uygulama Arşivi</p>
+        </header>
+
+        <div class="search-bar-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Oyun veya program ara..." onkeyup="filterGames()">
+            <button class="search-btn" onclick="filterGames()">Ara</button>
+        </div>
+
+        <div class="main-layout">
+            <div style="flex: 1;">
+                <div class="game-list" id="gameList">
+                    
+                    <!-- Resident Evil Requiem -->
+                    <div class="game-card" data-category="korku" data-title="resident evil requiem pc full indir" onclick="openDetail('rerequiem')">
+                        <div class="game-thumb">RE Requiem</div>
+                        <div class="game-info">
+                            <div class="game-title">Resident Evil Requiem PC Full İndir</div>
+                            <div class="game-desc">Korku ve gerilim dolu serinin bu yeni yapımında karanlık sırlar ve hayatta kalma mücadelesi sizi bekliyor.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Korku / Gerilim</span> | Boyut: <span>Full Sürüm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- FNAF Security Breach -->
+                    <div class="game-card" data-category="korku" data-title="five nights at freddys security breach pc full indir fnaf sb" onclick="openDetail('fnafsb')">
+                        <div class="game-thumb">FNAF Security Breach</div>
+                        <div class="game-info">
+                            <div class="game-title">Five Nights at Freddy's: Security Breach PC Full İndir</div>
+                            <div class="game-desc">Mega Pizzaplex'te geçen devasa açık dünya korku deneyimi. Gregory olarak sabaha kadar hayatta kalın.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Korku / Gerilim</span> | Boyut: <span>18 GB (Repack)</span></div>
+                        </div>
+                    </div>
+
+                    <!-- GTA V Enhanced -->
+                    <div class="game-card" data-category="acikdunya" data-title="gta 5 enhanced pc full indir gta v" onclick="openDetail('gta5')">
+                        <div class="game-thumb">GTA V Enhanced</div>
+                        <div class="game-info">
+                            <div class="game-title">GTA V Enhanced Edition PC Full İndir</div>
+                            <div class="game-desc">Los Santos'ta geçen suç dünyasının zirvesi. Geliştirilmiş grafikler ve güncellenmiş içerikler.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Açık Dünya / Aksiyon</span> | Boyut: <span>Full Sürüm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Gladio Mori -->
+                    <div class="game-card" data-category="aksiyon" data-title="gladio mori pc full indir" onclick="openDetail('gladiomori')">
+                        <div class="game-thumb">Gladio Mori</div>
+                        <div class="game-info">
+                            <div class="game-title">Gladio Mori PC Full İndir</div>
+                            <div class="game-desc">Gerçekçi fizik tabanlı dövüş mekanikleri ve özelleştirilebilir gladyatör savaşları sunan bağımsız aksiyon oyunu.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Aksiyon Oyunları / Dövüş</span> | Boyut: <span>Full Sürüm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- FNAF 2 -->
+                    <div class="game-card" data-category="korku" data-title="five nights at freddys 2 pc full indir fnaf 2" onclick="openDetail('fnaf2')">
+                        <div class="game-thumb">FNAF 2</div>
+                        <div class="game-info">
+                            <div class="game-title">Five Nights at Freddy's 2 PC Full İndir</div>
+                            <div class="game-desc">Yeni ve gelişmiş animatronikler, kapısız yeni güvenlik ofisi ve müzik kutusu mekanikleriyle hayatta kalma mücadelesi.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Korku / Gerilim</span> | Boyut: <span>Full Sürüm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- FNAF 1 -->
+                    <div class="game-card" data-category="korku" data-title="five nights at freddys 1 pc full indir fnaf 1" onclick="openDetail('fnaf1')">
+                        <div class="game-thumb">FNAF 1</div>
+                        <div class="game-info">
+                            <div class="game-title">Five Nights at Freddy's 1 PC Full İndir</div>
+                            <div class="game-desc">Freddy Fazbear's Pizza'da gece bekçisi olarak çalışın. Kameraları kontrol edin ve animatroniklerden sabaha kadar kaçın.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Korku / Gerilim</span> | Boyut: <span>Full Sürüm</span></div>
+                        </div>
+                    </div>
+
+                    <!-- RDR 2 -->
+                    <div class="game-card" data-category="acikdunya" data-title="red dead redemption 2 pc full indir rdr2" onclick="openDetail('rdr2')">
+                        <div class="game-thumb">RDR 2</div>
+                        <div class="game-info">
+                            <div class="game-title">Red Dead Redemption 2 PC Full İndir</div>
+                            <div class="game-desc">Arthur Morgan ve Van der Linde çetesinin epik Vahşi Batı hikayesi. Sınırsız açık dünya ve gelişmiş grafikler.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Açık Dünya / Aksiyon</span> | Boyut: <span>116 GB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Cyberpunk 2077 -->
+                    <div class="game-card" data-category="rpg" data-title="cyberpunk 2077 ultimate edition pc full indir" onclick="openDetail('cyberpunk')">
+                        <div class="game-thumb">Cyberpunk 2077</div>
+                        <div class="game-info">
+                            <div class="game-title">Cyberpunk 2077: Ultimate Edition PC Full İndir</div>
+                            <div class="game-desc">Night City'de geçen açık dünya RPG deneyimi. Phantom Liberty genişletme paketi ve son sürüm güncellemeler dahildir.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">RPG / Rol Yapma</span> | Boyut: <span>65 GB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- God of War Ragnarok -->
+                    <div class="game-card" data-category="macera" data-title="god of war ragnarok pc full indir gow" onclick="openDetail('gowr')">
+                        <div class="game-thumb">God of War Ragnarök</div>
+                        <div class="game-info">
+                            <div class="game-title">God of War Ragnarök PC Full İndir</div>
+                            <div class="game-desc">Kratos ve Atreus, Ragnarök gelip çatarken dokuz diyarda cevaplar aramak için kıyasıya bir mücadeleye girişiyor.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Macera Oyunları / Aksiyon</span> | Boyut: <span>84 GB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Man Remastered -->
+                    <div class="game-card" data-category="aksiyon" data-title="marvels spider-man remastered pc full indir spiderman" onclick="openDetail('spiderman')">
+                        <div class="game-thumb">Spider-Man Remastered</div>
+                        <div class="game-info">
+                            <div class="game-title">Marvel's Spider-Man Remastered PC Full İndir</div>
+                            <div class="game-desc">New York sokaklarında ağ atarak suçlularla mücadele edin. Gelişmiş PC optimizasyonları ve DLC hikayeleri içerir.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Aksiyon Oyunları</span> | Boyut: <span>45 GB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Resident Evil 4 Remake -->
+                    <div class="game-card" data-category="korku" data-title="resident evil 4 remake pc full indir re4" onclick="openDetail('re4')">
+                        <div class="game-thumb">Resident Evil 4 Remake</div>
+                        <div class="game-info">
+                            <div class="game-title">Resident Evil 4 Remake PC Full İndir</div>
+                            <div class="game-desc">Başkanın kaçırılan kızını kurtarmak için Avrupa'nın izole bir köyüne gönderilen Leon S. Kennedy'nin hikayesi.</div>
+                            <div class="game-meta">Kategori: <span class="red-accent">Korku / Gerilim</span> | Boyut: <span>50.32 GB</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="detailView" class="detail-view">
+                    <button class="back-btn" onclick="goHome()">← Ana Sayfaya Dön</button>
+                    <div id="detailContent"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>Kategoriler</h3>
+                <ul class="cat-list">
+                    <li class="cat-item active" onclick="filterCategory('all', this)">Tüm Oyunlar</li>
+                    <li class="cat-item" onclick="filterCategory('aksiyon', this)">Aksiyon Oyunları</li>
+                    <li class="cat-item" onclick="filterCategory('rpg', this)">RPG / Rol Yapma</li>
+                    <li class="cat-item" onclick="filterCategory('macera', this)">Macera Oyunları</li>
+                    <li class="cat-item" onclick="filterCategory('korku', this)">Korku / Gerilim</li>
+                    <li class="cat-item" onclick="filterCategory('acikdunya', this)">Açık Dünya</li>
+                    <li class="cat-item" onclick="filterCategory('program', this)">Full Programlar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCategory = 'all';
+        const gameData = {
+            'rerequiem': {
+                title: "Resident Evil Requiem PC Full İndir",
+                meta: 'Kategori: Korku / Gerilim | Boyut: Full Sürüm',
+                desc: "Korku ve gerilim dolu serinin bu yeni yapımında karanlık sırlar ve hayatta kalma mücadelesi sizi bekliyor.",
+                links: [
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/WD4YTCg2' },
+                    { name: 'Transfer İndir', url: 'https://transfer.it/t/Mp1KqR9nAJhK' }
+                ]
+            },
+            'fnafsb': {
+                title: "Five Nights at Freddy's: Security Breach PC Full İndir",
+                meta: 'Kategori: Korku / Gerilim | Boyut: 18 GB (Repack)',
+                desc: "Mega Pizzaplex'te geçen devasa açık dünya korku deneyimi. Gregory olarak animatroniklerden kaçın ve sabaha kadar hayatta kalın.",
+                links: [
+                    { name: 'Turbobit İndir', url: 'https://turbobit.net/0ikco5zx3oju.html' }
+                ]
+            },
+            'gta5': {
+                title: "GTA V Enhanced Edition PC Full İndir",
+                meta: 'Kategori: Açık Dünya / Aksiyon | Boyut: Full Sürüm',
+                desc: "Los Santos'ta geçen suç dünyasının zirvesi. Geliştirilmiş grafikler ve güncellenmiş içerikler.",
+                links: [
+                    { name: 'Turbobit İndir', url: 'https://turbobit.net/r1beaa7o4955.html?short_domain=trbt.cc' },
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/SEqizP' },
+                    { name: 'Transfer İndir', url: 'https://transfer.it/t/DBD5ec0x2Bja' }
+                ]
+            },
+            'gladiomori': {
+                title: "Gladio Mori PC Full İndir",
+                meta: 'Kategori: Aksiyon / Dövüş | Boyut: Full Sürüm',
+                desc: 'Gerçekçi fizik tabanlı dövüş mekanikleri ve özelleştirilebilir gladyatör savaşları sunan bağımsız aksiyon oyunu.',
+                links: [
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/zwHyZ7vr' }
+                ]
+            },
+            'fnaf2': {
+                title: "Five Nights at Freddy's 2 PC Full İndir",
+                meta: 'Kategori: Korku / Gerilim | Boyut: Full Sürüm',
+                desc: 'Yeni ve gelişmiş animatronikler, kapısız yeni güvenlik ofisi ve müzik kutusu mekanikleriyle hayatta kalma mücadelesi devam ediyor.',
+                links: [
+                    { name: 'Google Drive İndir', url: 'https://drive.google.com/file/d/12cvjKWK1cWQ02xMPUwJAMgU9wVgs-7jI/view' },
+                    { name: 'Mediafire İndir', url: 'https://www.mediafire.com/file/dm3z2kh26d55qle/Five.Nights.at.Freddys.2-FP.rar/file' }
+                ]
+            },
+            'fnaf1': {
+                title: "Five Nights at Freddy's 1 PC Full İndir",
+                meta: 'Kategori: Korku / Gerilim | Boyut: Full Sürüm',
+                desc: "Freddy Fazbear's Pizza'da gece bekçisi olarak çalışın. Kameraları kontrol edin ve animatroniklerden sabaha kadar kaçın.",
+                links: [
+                    { name: 'Google Drive İndir', url: 'https://drive.google.com/file/d/1Wo-V_cxCn2orDvn4B53ym7r5SqgQPT5g/view' },
+                    { name: 'Cloud Mail.ru İndir', url: 'https://cloud.mail.ru/public/knyR/7DXdtTLF3' }
+                ]
+            },
+            'rdr2': {
+                title: 'Red Dead Redemption 2 PC Full İndir',
+                meta: 'Kategori: Açık Dünya / Aksiyon | Boyut: 116 GB',
+                desc: 'Arthur Morgan ve Van der Linde çetesinin epik Vahşi Batı hikayesi. Sınırsız açık dünya ve gelişmiş grafikler.',
+                links: [
+                    { name: 'Buzzheavier İndir', url: 'https://buzzheavier.com/a8y779onxh53' }
+                ]
+            },
+            'cyberpunk': {
+                title: 'Cyberpunk 2077: Ultimate Edition PC Full İndir',
+                meta: 'Kategori: RPG / Rol Yapma | Boyut: 65 GB',
+                desc: "Night City'de geçen açık dünya RPG deneyimi. Phantom Liberty genişletme paketi ve son sürüm güncellemeler dahildir.",
+                links: [
+                    { name: 'Fileq İndir', url: 'https://fileq.net/8advygf0zxal.html' }
+                ]
+            },
+            'gowr': {
+                title: 'God of War Ragnarök PC Full İndir',
+                meta: 'Kategori: Macera / Aksiyon | Boyut: 84 GB',
+                desc: 'Kratos ve Atreus, Ragnarök gelip çatarken dokuz diyarda cevaplar aramak için kıyasıya bir mücadeleye girişiyor.',
+                links: [
+                    { name: 'Fileq İndir', url: 'https://fileq.net/40t7e8i8zm6h.html' },
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/6tnGpb' }
+                ]
+            },
+            'spiderman': {
+                title: "Marvel's Spider-Man Remastered PC Full İndir",
+                meta: 'Kategori: Aksiyon Oyunları | Boyut: 45 GB',
+                desc: 'New York sokaklarında ağ atarak suçlularla mücadele edin. Gelişmiş PC optimizasyonları ve DLC hikayeleri içerir.',
+                links: [
+                    { name: 'Turbobit İndir', url: 'https://turbobit.net/43o1swjjs61b.html?short_domain=trbt.cc' },
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/DIGzoV' },
+                    { name: 'Transfer İndir', url: 'https://transfer.it/t/04WpCEtjXBzC' }
+                ]
+            },
+            're4': {
+                title: 'Resident Evil 4 Remake PC Full İndir',
+                meta: 'Kategori: Korku / Gerilim | Boyut: 50.32 GB',
+                desc: "Başkanın kaçırılan kızını kurtarmak için Avrupa'nın izole bir köyüne gönderilen Leon S. Kennedy'nin hikayesi.",
+                links: [
+                    { name: 'Turbobit İndir', url: 'https://turbobit.net/1f6djgcy9fwb.html' },
+                    { name: 'Gofile İndir', url: 'https://gofile.io/d/cOWxnC' }
+                ]
+            }
+        };
+
+        function openDetail(gameKey) {
+            let game = gameData[gameKey];
+            if (!game) return;
+            document.getElementById('gameList').style.display = 'none';
+            document.querySelector('.search-bar-container').style.display = 'none';
+            let detailEl = document.getElementById('detailContent');
+            let linksHtml = game.links.map(l => `<a href="${l.url}" target="_blank" class="btn-download">${l.name}</a>`).join('');
+            detailEl.innerHTML = `
+                <div class="detail-title">${game.title}</div>
+                <div style="font-size: 0.85rem; color: #888; margin-bottom: 15px;">${game.meta}</div>
+                <div class="detail-section"><h3>Oyun Açıklaması</h3><p class="detail-desc">${game.desc}</p></div>
+                <div class="detail-section"><h3>İndirme Linkleri</h3><div class="download-links-grid">${linksHtml}</div></div>
+                <div class="warning-notice">⚠ VİRÜS ÇIKMA DURUMUNDA SİTE SORUMLU DEĞİLDİR ⚠</div>
+            `;
+            document.getElementById('detailView').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('gameList').style.display = 'flex';
+            document.querySelector('.search-bar-container').style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filterCategory(category, el) {
+            currentCategory = category;
+            document.querySelectorAll('.cat-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+            applyFilters();
+        }
+
+        function filterGames() { applyFilters(); }
+
+        function applyFilters() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.game-card');
+            cards.forEach(card => {
+                let category = card.getAttribute('data-category');
+                let titleText = card.getAttribute('data-title');
+                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                let matchesSearch = titleText.includes(query);
+                card.style.display = (matchesCategory && matchesSearch) ? 'flex' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
